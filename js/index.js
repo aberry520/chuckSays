@@ -7,12 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     getQuote(apiUrl);
     const catUrl = "https://api.chucknorris.io/jokes/categories"
     get(catUrl).then(function (response) {
-        makeCatList(response);
-        console.log(response);
-        response.filter(function(){
-            const filter = response.pop("hi");
-            console.log(response);
-        });
+        const filterList = response.filter((x)=> x !== "explicit");
+        makeCatList(filterList);
     })
 
     catList.addEventListener("submit", function (event) {
