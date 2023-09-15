@@ -4,14 +4,31 @@ const catList = document.querySelector("#catList");
 
 document.addEventListener("DOMContentLoaded", () => {
     const apiUrl = "https://api.chucknorris.io/jokes/random?category=dev";
-    get(apiUrl).then(function (response) {
-        showQuote(response.value, chuckQuote);
-    })
+    getQuote(apiUrl);
     const catUrl = "https://api.chucknorris.io/jokes/categories"
     get(catUrl).then(function (response) {
         makeCatList(response);
+        console.log(response);
+        response.filter(function(){
+            const filter = response.pop("hi");
+            console.log(response);
+        });
     })
+
+    catList.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const newCategory = this.querySelector("select").value;
+        const apiUrl = `https://api.chucknorris.io/jokes/random?category=${newCategory}`;
+        getQuote(apiUrl);
+    });
+    
 });
+
+function getQuote (apiUrl){
+    get(apiUrl).then(function (response) {
+        showQuote(response.value, chuckQuote);
+    })
+};
 
 function showQuote(quote, element) {
     element.innerText = quote;
@@ -30,15 +47,3 @@ function makeCatList(catArr) {
     // append the select to the form
     catList.append(createSelect);
 };
-
-catList.addEventListener("submit", function () {
-    
-});
-
-
-
-
-/////////extra add button//////////////
-newQuote.addEventListener("click", function () {
-    history.go(0);
-})
